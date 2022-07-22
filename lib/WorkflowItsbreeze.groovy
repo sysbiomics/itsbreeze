@@ -7,13 +7,14 @@ class WorkflowItsbreeze {
     //
     // Check and validate parameters
     //
-    public static void initialise(params, log) {
-        genomeExistsError(params, log)
+     public static void initialise(params, log) {
+    //    genomeExistsError(params, log)
 
-        if (!params.fasta) {
-            log.error "Genome fasta file not specified with e.g. '--fasta genome.fa' or via a detectable config file."
-            System.exit(1)
-        }
+    // We don't do that here
+    //    if (!params.fasta) {
+    //        log.error "Genome fasta file not specified with e.g. '--fasta genome.fa' or via a detectable config file."
+    //        System.exit(1)
+    //    }
     }
 
     //

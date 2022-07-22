@@ -1,0 +1,4 @@
+sample,fastq_1,fastq_2
+A01,test_dat/A01B_S88_L001_R1_001.fastq.gz,test_dat/A01B_S88_L001_R2_001.fastq.gz
+A02,test_dat/A02B_S89_L001_R1_001.fastq.gz,test_dat/A02B_S89_L001_R2_001.fastq.gz
+A03,test_dat/A03B_S90_L001_R1_001.fastq.gz,test_dat/A03B_S90_L001_R2_001.fastq.gz
