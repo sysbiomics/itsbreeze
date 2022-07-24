@@ -80,8 +80,10 @@ workflow ITSBREEZE {
         INPUT_CHECK.out.reads
     )
     ch_versions = ch_versions.mix(FASTQC.out.versions.first())
-    
-    PIPITS(INPUT_CHECK)
+
+    // FASTP
+
+    PIPITS(INPUT_CHECK.out.reads)
 
     CUSTOM_DUMPSOFTWAREVERSIONS (
         ch_versions.unique().collectFile(name: 'collated_versions.yml')
