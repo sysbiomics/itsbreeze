@@ -34,7 +34,7 @@ ch_multiqc_custom_config = params.multiqc_config ? Channel.fromPath(params.multi
 // SUBWORKFLOW: Consisting of a mix of local and nf-core/modules
 //
 include { INPUT_CHECK             } from '../subworkflows/local/input_check'
-include { PIPITS } from '../modules/local/pipits'
+include { PIPITS } from '../subworkflows/local/pipits'
 
 
 /*
@@ -82,13 +82,19 @@ workflow ITSBREEZE {
     ch_versions = ch_versions.mix(FASTQC.out.versions.first())
 
     // FASTP
+    params.fastp_save_trimmed_fail = false
+    FASTP (
+        INPUT_CHECK.out.reads,
+        params.fastp_save_trimmed_fail,
+        []
+    )
 
-    PIPITS(INPUT_CHECK.out.reads)
+    //PIPITS(INPUT_CHECK.out.reads)
+    PIPITS(FASTP.out.reads)
 
     CUSTOM_DUMPSOFTWAREVERSIONS (
         ch_versions.unique().collectFile(name: 'collated_versions.yml')
     )
-
 
 
     //
