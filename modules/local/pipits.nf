@@ -1,7 +1,7 @@
 
 
 process pipits_create_pairsline {
-    tag ""
+    label 'process_low'
 
     // Need to be collect in one batch
     input:
@@ -17,7 +17,7 @@ process pipits_create_pairsline {
 }
 
 process pipits_create_pairslist {
-    tag ""
+    label "process_low"
 
     // Need to be collect in one batch
     input:
@@ -33,9 +33,8 @@ process pipits_create_pairslist {
     """
 }
 
-
 process pipits_seq_prep {
-    tag ""
+    label 'process_medium'
 
     conda (params.enable_conda ? "bioconda::pipits==2.2" : null)
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
@@ -65,7 +64,7 @@ process pipits_seq_prep {
 }
 
 process pipits_funits {
-    tag ""
+    label 'process_medium'
 
     conda (params.enable_conda ? "bioconda::pipits==2.2" : null)
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
@@ -85,7 +84,7 @@ process pipits_funits {
 
     script:
     """
-      pipits_funits -i ${preppedfasta} -o out_funits -x ${ITS} -v -r
+      pipits_funits -i ${preppedfasta} -o out_funits -x ${ITS} -v -r -t ${task.process}
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
@@ -96,7 +95,7 @@ process pipits_funits {
 }
 
 process pipits_process {
-    tag ""
+    label 'process_medium'
 
     conda (params.enable_conda ? "bioconda::pipits==2.2" : null)
     container "${ workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container ?
@@ -114,7 +113,7 @@ process pipits_process {
 
     script:
     """
-      pipits_process -i ${ITSfasta} -o out_process -v -r
+      pipits_process -i ${ITSfasta} -o out_process -v -r -t ${task.process}
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
